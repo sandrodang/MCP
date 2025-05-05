@@ -11,9 +11,14 @@ nl2sql = NL2SQLTool(db_uri="postgresql://sandro:24122004@localhost:5432/test_too
 @mcp.tool()
 async def run_query(query: str) -> Any:
     """Chuyển natural language thành SQL và thực thi"""
-    # Sử dụng NL2SQLTool để sinh và chạy SQL
-    result = nl2sql.run(query)
+    print(f"Query nhận được: {query}")
+    try:
+        result = nl2sql.run(query)
+    except Exception as e:
+        result = {"error": str(e)}
     return result
 
+
 if __name__ == "__main__":
+    print("Starting FastMCP server...")
     mcp.run(transport="sse")  
